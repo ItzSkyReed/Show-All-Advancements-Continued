@@ -1,4 +1,7 @@
 # Show all advancements
+
+This is a fork of original mod: https://github.com/p1k0chu/show-all-advancements
+
 Minecraft server side mod that makes all advancements show up for clients.<br>
 
 "Hidden" advancements are, well, hidden. By default. You can override
