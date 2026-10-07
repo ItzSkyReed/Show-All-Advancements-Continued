@@ -2,6 +2,6 @@ package com.github.p1k0chu.mcmod.show_all_advancements;
 
 import java.util.Set;
 
-public record ShowAllAdvConfig(boolean showHidden, Set<String> alwaysHiddenAdv) {
+public record ShowAllAdvConfig(boolean showHiddens, Set<String> alwaysHiddenAdvs) {
 }
 
