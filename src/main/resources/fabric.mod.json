@@ -5,7 +5,8 @@
 	"name": "Show all advancements",
 	"description": "Show every advancement to players",
 	"authors": [
-		"p1kachu"
+		"p1kachu",
+		"ItzSkyReed"
 	],
 	"contact": {
 		"sources": "https://github.com/p1k0chu/show-all-advancements",
@@ -24,10 +25,10 @@
 		]
 	},
 	"depends": {
-		"fabricloader": ">=0.16.9",
-		"minecraft": ">=26.1",
-		"java": ">=21",
-		"fabric-api": "*"
+		"fabricloader": ">={loader_version}",
+		"minecraft": ">={minecraft_version}",
+		"java": ">=25",
+		"fabric-api": ">=${fabric_api_version}"
 	},
 	"suggests": {
 	}
