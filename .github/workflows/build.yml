@@ -25,7 +25,7 @@ jobs:
           distribution: 'temurin'
 
       - name: build
-        run: ./gradlew buildAndCollect
+        run: ./gradlew build
 
       - name: capture build artifacts
         uses: actions/upload-artifact@v7
