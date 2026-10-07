@@ -52,41 +52,39 @@ public class ShowAllAdvsEntry implements ModInitializer {
             LOGGER.error("Error while loading config", e);
         }
 
-        CommandRegistrationCallback.EVENT.register((dispatcher, _, _) -> {
-            dispatcher.register(Commands.literal(MOD_ID)
-                    .then(Commands.literal("reloadconfig")
-                            .requires(source -> source.permissions().hasPermission(Permissions.COMMANDS_ADMIN)
-                                    || source.isPlayer() && source.getServer().isSingleplayerOwner(source.getPlayer().nameAndId()))
-                            .executes(ctx -> {
-                                try {
-                                    ShowAllAdvsEntry.getInstance().reloadConfig();
+        CommandRegistrationCallback.EVENT.register((dispatcher, _, _) -> dispatcher.register(Commands.literal(MOD_ID)
+                .then(Commands.literal("reloadconfig")
+                        .requires(source -> source.permissions().hasPermission(Permissions.COMMANDS_ADMIN)
+                                || source.isPlayer() && source.getServer().isSingleplayerOwner(source.getPlayer().nameAndId()))
+                        .executes(ctx -> {
+                            try {
+                                ShowAllAdvsEntry.getInstance().reloadConfig();
 
-                                    var server = ctx.getSource().getServer();
+                                var server = ctx.getSource().getServer();
 
-                                    for (var player : server.getPlayerList().getPlayers()) {
-                                        ((PlayerAdvancementsDuck) player.getAdvancements())
-                                                .show_all_advancements$clearVisible();
+                                for (var player : server.getPlayerList().getPlayers()) {
+                                    ((PlayerAdvancementsDuck) player.getAdvancements())
+                                            .show_all_advancements$clearVisible();
 
-                                        Iterable<AdvancementNode> roots = ((IServerAdvancementManager) server
-                                                .getAdvancements()).show_all_advancements$getRoots();
-                                        roots.forEach(node -> ((PlayerAdvancementsAccessor) player.getAdvancements())
-                                                .invokeMarkForVisibilityUpdate(node.holder()));
-                                    }
-
-                                    ctx.getSource().sendSuccess(() -> Component.literal("Successfully reloaded config."), true);
-                                    return 0;
-                                } catch (IOException e) {
-                                    ctx.getSource().sendFailure(Component.literal(
-                                            String.format("Error while reloading config: %s", e.getMessage())));
-                                    LOGGER.error("Error while reloading config", e);
-                                    return 1;
+                                    Iterable<AdvancementNode> roots = ((IServerAdvancementManager) server
+                                            .getAdvancements()).show_all_advancements$getRoots();
+                                    roots.forEach(node -> ((PlayerAdvancementsAccessor) player.getAdvancements())
+                                            .invokeMarkForVisibilityUpdate(node.holder()));
                                 }
-                            })));
-        });
+
+                                ctx.getSource().sendSuccess(() -> Component.literal("Successfully reloaded config."), true);
+                                return 0;
+                            } catch (IOException e) {
+                                ctx.getSource().sendFailure(Component.literal(
+                                        String.format("Error while reloading config: %s", e.getMessage())));
+                                LOGGER.error("Error while reloading config", e);
+                                return 1;
+                            }
+                        }))));
     }
 
     public boolean showsThisHidden(String id) {
-        return config.showHidden() && !config.alwaysHiddenAdv().contains(id);
+        return config.showHiddens() && !config.alwaysHiddenAdvs().contains(id);
     }
 
     public static ShowAllAdvsEntry getInstance() {
