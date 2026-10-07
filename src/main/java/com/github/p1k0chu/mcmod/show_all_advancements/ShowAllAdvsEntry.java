@@ -38,7 +38,7 @@ public class ShowAllAdvsEntry implements ModInitializer {
 
     private static ShowAllAdvsEntry INSTANCE;
 
-    private ShowAllAdvsConfig config = new ShowAllAdvsConfig(false, Set.of());
+    private ShowAllAdvConfig config = new ShowAllAdvConfig(false, Set.of());
 
     @Override
     public void onInitialize() {
@@ -86,7 +86,7 @@ public class ShowAllAdvsEntry implements ModInitializer {
     }
 
     public boolean showsThisHidden(String id) {
-        return config.showHiddens() && !config.alwaysHiddenAdvs().contains(id);
+        return config.showHidden() && !config.alwaysHiddenAdv().contains(id);
     }
 
     public static ShowAllAdvsEntry getInstance() {
@@ -103,10 +103,10 @@ public class ShowAllAdvsEntry implements ModInitializer {
 
         if (config.exists()) {
             try (BufferedReader r = new BufferedReader(new FileReader(config))) {
-                this.config = GSON.fromJson(r, ShowAllAdvsConfig.class);
+                this.config = GSON.fromJson(r, ShowAllAdvConfig.class);
             }
         } else {
-            this.config = new ShowAllAdvsConfig(false, Set.of());
+            this.config = new ShowAllAdvConfig(false, Set.of());
             try (FileWriter w = new FileWriter(config)) {
                 GSON.toJson(this.config, w);
             } catch (IOException e) {
